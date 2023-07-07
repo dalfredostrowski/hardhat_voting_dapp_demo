@@ -12,7 +12,7 @@ async loadBlockchainData(){
     console.log('VotingAddress.address', VotingAddress.address)
     console.log('VotingAbi.abi', VotingAbi.abi)
     let NewHelloAbi = require('./contractsData/Voting.json');
-    const web3 = new Web3(new Web3.providers.HttpProvider("http://ec2-34-222-177-70.us-west-2.compute.amazonaws.com:8545"))
+    const web3 = new Web3(new Web3.providers.HttpProvider("http://ec2-34-222-176-68.us-west-2.compute.amazonaws.com:8545"))
     var account;
     const accounts  = await web3.eth.getAccounts()
     console.log(accounts)
@@ -26,7 +26,7 @@ async loadBlockchainData(){
     contract.options.address = VotingAddress.address
     this.setState( { contract })
     let myCandidateList = await  contract.methods.getCandidateList().call();  
-    console.log(myCandidateList);   
+    console.log("** myCandiateList", myCandidateList);   
 //const number = await contract.methods.totalVotesFor('Johnny').call(console.log)
   //  console.log("Johnny number: ", number)    
     var count = await this.state.contract.methods.totalVotesFor('Johnny').call(console.log);
@@ -51,7 +51,7 @@ async loadBlockchainData(){
 
     }
     voting = async (name) =>  {
-        this.state.contract.methods.voteForCandidate(name).send({gas: 140000, from: this.state.account });
+        await this.state.contract.methods.voteForCandidate(name).send({gas: 140000, from: this.state.account });
         var count = await this.state.contract.methods.totalVotesFor(name).call(console.log);
         this.setState( { [name]: parseInt(count) } )
  }

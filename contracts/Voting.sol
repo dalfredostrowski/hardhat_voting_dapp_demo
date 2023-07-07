@@ -15,20 +15,21 @@ contract Voting {
   deploy the contract to the blockchain. When we deploy the contract,
   we will pass an array of candidates who will be contesting in the election
   */
-  constructor() public {
-    candidateList = ["Johnny", "Amber"];
-  }
+  constructor(string[] memory candidates) public {
+    candidateList = candidates;
+
+ }
 
   // This function returns the total votes a candidate has received so far
   function totalVotesFor(string memory candidate) view public returns (uint256) {
-//    require(validCandidate(candidate));
+    require(validCandidate(candidate));
     return votesReceived[candidate];
   }
 
   // This function increments the vote count for the specified candidate. This
   // is equivalent to casting a vote
   function voteForCandidate(string memory candidate) public {
-//    require(validCandidate(candidate));
+    require(validCandidate(candidate));
     votesReceived[candidate] += 1;
   }
 
