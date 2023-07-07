@@ -6,7 +6,7 @@ sudo apt install nodejs build-essential
 npm install web3
 npm install --save-dev @nomiclabs/hardhat-ethers ethers @nomiclabs/hardhat-waffle ethereum-waffle chai
 npx create-react-app voting 
-cd hello
+cd voting
 npx hardhat
 
 # double check dns
