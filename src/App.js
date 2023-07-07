@@ -1,3 +1,7 @@
+
+
+
+
 import React, {Component} from 'react'
 import Web3 from 'web3'
 import VotingAbi from './contractsData/Voting.json'
@@ -11,7 +15,6 @@ class App extends Component {
 async loadBlockchainData(){
     console.log('VotingAddress.address', VotingAddress.address)
     console.log('VotingAbi.abi', VotingAbi.abi)
-    let NewHelloAbi = require('./contractsData/Voting.json');
     const web3 = new Web3(new Web3.providers.HttpProvider("http://ec2-34-222-176-68.us-west-2.compute.amazonaws.com:8545"))
     var account;
     const accounts  = await web3.eth.getAccounts()
@@ -27,16 +30,10 @@ async loadBlockchainData(){
     this.setState( { contract })
     let myCandidateList = await  contract.methods.getCandidateList().call();  
     console.log("** myCandiateList", myCandidateList);   
-//const number = await contract.methods.totalVotesFor('Johnny').call(console.log)
-  //  console.log("Johnny number: ", number)    
     var count = await this.state.contract.methods.totalVotesFor('Johnny').call(console.log);
-    
-        this.setState( { Johnny: parseInt(count) } )
-
-
-	count = await this.state.contract.methods.totalVotesFor('Amber').call(console.log);
-
-        this.setState( { Amber : parseInt(count) } )
+    this.setState( { Johnny: parseInt(count) } )
+    count = await this.state.contract.methods.totalVotesFor('Amber').call(console.log);
+    this.setState( { Amber : parseInt(count) } )
 
 }
     constructor(props){
@@ -64,12 +61,9 @@ render(){
                 <div>
                  <button onClick={() => this.voting("Johnny")}>Johnny vote</button>
                  <button onClick={() => this.voting("Amber")}>Amber vote</button>
-
 		</div>
-
                 <h5>Johnny count: {this.state.Johnny}</h5>
                 <h5>Amber count: {this.state.Amber}</h5>
-
 		</div>
         );
 }
